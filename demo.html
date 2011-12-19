@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" >
+<head>
+	<title>ToolTip Example</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<link rel="stylesheet" type="text/css" href="tooltips.css" />
+	<style>.clickme{cursor:pointer;}</style>
+
+	<script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+	<script language="JavaScript" src="jquery.tooltips.js"></script>
+	<script language="JavaScript">
+	$(document).ready(function(){
+		$('.clickme').tooltips({
+			'activation':'click',           //'click' or 'hover'
+			'color':'#A0D650',              //any css color
+			'data':'Test !<br /\>Multiligne',//whatever you want (if 'title', title attribute will be used)
+			'height':'80',                  //min 50px
+			'textColor':'white',            //any css color
+			'width':'150'                   //min 50px
+		});
+
+		$('.hoverme').tooltips({
+			'activation':'hover',           //'click' or 'hover'
+			'color':'DodgerBlue',           //any css color
+			'data':'C\'est joli !<br /\>Trop bien :D',//whatever you want (if 'title', title attribute will be used)
+			'height':'80',                  //min 50px
+			'textColor':'white',            //any css color
+			'width':'150'                   //min 50px
+		});
+
+		$(window).resize(function(){
+			$('.clickme').tooltips('resetPosition');
+			$('.hoverme').tooltips('resetPosition');
+		});
+	});
+	</script>
+</head>
+<body>
+	<p>
+		Texte de test, <span class="clickme"><b>ce mot</b></span> est cliquable<br /><br /><br /><br /><br />
+		<span class="clickme"><b>Ce mot</b></span>, aussi il faut juste cliquer dessus !
+		Ou encore en mode "survol" il y a : <span class="hoverme"><b>ce mot</b></span>
+	</p>
+</body>
+</html>
