@@ -75,7 +75,7 @@ function drawTriangle(canvas){
 			}
 
 			$('#can'+uid).css({'left':canvas.left});
-			$('.tooltips-wrapper').hide();
+			if(!option.multiple) $('.tooltips-wrapper').hide();
 	        canvas.elem = document.getElementById('can'+uid);
 	        drawTriangle(canvas);
 	        ttip.fadeIn('fast');
@@ -86,11 +86,16 @@ function drawTriangle(canvas){
 			color:'white',
 			data:'title',
 			height:100,
+			multiple:false,
 			textColor:'black',
 			width:300
 		};
 		var options = $.extend(defaults, options);
 		return this.each(function(){
+			if(options.multiple && options.activation == 'hover'){
+				options.multiple = false;
+				alert("Multiple tooltips isnt avaliable on hover activation. Multiple will be disabled")
+			}
 			if(options.height < 50) options.height = 50;
 	        if(options.width  < 50) options.width  = 50;
 
@@ -126,6 +131,12 @@ function drawTriangle(canvas){
 	            });
 	            tooltip.click(function(e){e.stopPropagation();});
 	            $(document).click(function(e){tooltip.hide();});
+		        if(options.multiple){
+					$('.tooltips-wrapper').click(function(){
+		        		$('.tooltips-wrapper').css('z-index','998');
+						$(this).css('z-index','999');
+					});
+		        }
 	        }
 		});
 	};
