@@ -1,5 +1,5 @@
 /*
- * Simple ToolTips v1.0
+ * Simple ToolTips v1.2
  * By Guillaume Coste, guillaume.coste@gmail.com
  * See demo.html for examples
 */
