@@ -46,7 +46,7 @@ function drawTriangle(canvas){
 			var pos  = $.extend({}, elem.offset(),{width:elem.offsetWidth,height:elem.offsetHeight});
 			var uid  = elem.attr('uid');
 			var left = pos.left-(options.width/2)+elem.width()/2;
-			var marg = {'bottom':'-3', 'top':'-6'};
+			var marg = $.browser.webkit ? {'bottom':'-3', 'top':'-6'} : {'bottom':'-4', 'top':'-5'};
 			var ttip = $('#tp_'+uid+'').parent('.tooltips-wrapper');
 
 			canvas = new Array();
@@ -99,7 +99,7 @@ function drawTriangle(canvas){
 		return this.each(function(){
 			if(options.multiple && options.activation == 'hover'){
 				options.multiple = false;
-				alert("Multiple tooltips isnt avaliable on hover activation. Multiple will be disabled")
+				alert("Multiple tooltips isn't avaliable on hover activation. Multiple will be disabled")
 			}
 			if(options.height < 50) options.height = 50;
 			if(options.width  < 50) options.width  = 50;
