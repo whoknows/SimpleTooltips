@@ -76,7 +76,7 @@ function drawTriangle(canvas){
 
 			$('#can'+uid).css({'left':canvas.left});
 			if(!option.multiple){
-				$('.tooltips-wrapper').hide();
+				$('.tooltips-wrapper').fadeOut('fast');
 			} else {
 				$('.tooltips-wrapper').css('z-index','998');
 				ttip.css('z-index','999');
@@ -125,7 +125,7 @@ function drawTriangle(canvas){
 				$(this).hover(function(){
 					resetPosition($(this), options);
 				}, function(){ tooltip.hide(); });
-				tooltip.hover(function(){tooltip.show();}, function(){tooltip.hide();});
+				tooltip.hover(function(){tooltip.show();}, function(){tooltip.fadeOut('fast');});
 			} else {
 				$(this).bind('click',function(e){
 					if(tooltip.css('display') == 'none')
