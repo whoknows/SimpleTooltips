@@ -75,7 +75,12 @@ function drawTriangle(canvas){
 			}
 
 			$('#can'+uid).css({'left':canvas.left});
-			if(!option.multiple) $('.tooltips-wrapper').hide();
+			if(!option.multiple){
+				$('.tooltips-wrapper').hide();
+			} else {
+				$('.tooltips-wrapper').css('z-index','998');
+				ttip.css('z-index','999');
+			}
 	        canvas.elem = document.getElementById('can'+uid);
 	        drawTriangle(canvas);
 	        ttip.fadeIn('fast');
