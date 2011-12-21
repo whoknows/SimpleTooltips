@@ -125,7 +125,7 @@ function drawTriangle(canvas){
 				$(this).hover(function(){
 					resetPosition($(this), options);
 				}, function(){ tooltip.hide(); });
-				tooltip.hover(function(){tooltip.show();}, function(){tooltip.fadeOut('fast');});
+				tooltip.hover(function(){tooltip.show();}, function(){tooltip.hide();});
 			} else {
 				$(this).bind('click',function(e){
 					if(tooltip.css('display') == 'none')
