@@ -1,6 +1,8 @@
 .tooltips-wrapper{
 	display:none;
 	font-size:1em;
+	margin:0px;
+	padding:0px;
 	position:absolute;
 	z-index:999;
 	-moz-border-radius: 5px;
@@ -9,7 +11,7 @@
 }
 
 .tooltips-triangle{
-	position:relative;
+	position:absolute;
 }
 
 .tooltips-body{
@@ -18,7 +20,9 @@
 	color:white;
 	font-family:"Museo Slab",Verdana, Arial, Helvetica;
 	font-size: 12px;
+	margin:0px;
 	padding:5px;
+	position:relative;
 	width:100%;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
