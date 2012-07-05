@@ -35,7 +35,6 @@ function drawTriangle(canvas){
             var pos  = $.extend({}, elem.offset(),{width:elem.offsetWidth,height:elem.offsetHeight});
             var uid  = elem.attr('uid');
             var left = pos.left-(options.width/2)+elem.width()/2;
-            var marg = $.browser.webkit ? {'bottom':'-3', 'top':'-6'} : {'bottom':'-4', 'top':'-5'};
             var ttip = $('#tp_'+uid+'').parent('.tooltips-wrapper');
 
             canvas = new Array();
@@ -55,12 +54,14 @@ function drawTriangle(canvas){
             });
 
             $('#can'+uid+'').remove();
+            ttip.children().append(canvas.html);
+
             if(pos.top < ttip.height()){
-                $('#tp_'+uid).css({'margin-top':(marg['top'])+'px'});
-                ttip.css({'top':pos.top + elem.height()+'px'}).prepend(canvas.html);
+                $('#can'+uid).css({'bottom':'100%', 'top':''});
+                ttip.css({'top':pos.top + elem.height()+12+'px'});
             } else {
-                $('#tp_'+uid).css({'margin-bottom':marg['bottom']+'px'});
-                ttip.css({'top':pos.top - ttip.height()+'px'}).append(canvas.html);
+                $('#can'+uid).css({'bottom':'', 'top':'100%'});
+                ttip.css({'top':pos.top - ttip.height()+'px'});
             }
 
             $('#can'+uid).css({'left':canvas.left});
