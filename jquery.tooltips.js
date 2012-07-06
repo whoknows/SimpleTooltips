@@ -1,9 +1,8 @@
 /*
- * Simple ToolTips v1.2.1
+ * Simple ToolTips v1.3
  * By Guillaume Coste, guillaume.coste@gmail.com
  * See demo.html for examples
 */
-function in_array(n,h){for(k='';k in h;){if(h[k]==n)return true;}return false;}
 
 function drawTriangle(canvas){
     if (canvas.elem.getContext){
@@ -31,14 +30,13 @@ function drawTriangle(canvas){
 (function($){
     var setIDs = new Array();
     $.fn.tooltips = function(options){
-        function resetPosition(elem, option){
+        function resetPosition(elem, option, ttip){
             var pos  = $.extend({}, elem.offset(),{width:elem.offsetWidth,height:elem.offsetHeight});
             var uid  = elem.attr('uid');
             var left = pos.left-(options.width/2)+elem.width()/2;
-            var ttip = $('#tp_'+uid+'').parent('.tooltips-wrapper');
 
             canvas = new Array();
-            canvas.html = '<canvas id="can'+uid+'" width="30" height="12" class="tooltips-triangle"></canvas>';
+            canvas.html = '<canvas width="30" height="12" class="tooltips-triangle"></canvas>';
             canvas.pos  = pos.top < ttip.height() ? 'top' : 'bottom';
             canvas.left = (option.width/2)-15;
             canvas.color= option.color;
@@ -48,30 +46,29 @@ function drawTriangle(canvas){
             }
 
             ttip.css({
-                'min-height':options.height+'px',
                 'left'  :left,
                 'width' :options.width+'px'
             });
 
-            $('#can'+uid+'').remove();
-            ttip.children().append(canvas.html);
+            ttip.children('canvas').remove();
+            ttip.append(canvas.html);
 
             if(pos.top < ttip.height()){
-                $('#can'+uid).css({'bottom':'100%', 'top':''});
-                ttip.css({'top':pos.top + elem.height()+12+'px'});
+                ttip.children('canvas').css({'bottom':'99%', 'top':''});
+                ttip.css({'top':pos.top + elem.height()+10+'px'});
             } else {
-                $('#can'+uid).css({'bottom':'', 'top':'100%'});
-                ttip.css({'top':pos.top - ttip.height()+'px'});
+                ttip.children('canvas').css({'bottom':'', 'top':'99%'});
+                ttip.css({'top':pos.top - ttip.height()-10+'px'});
             }
 
-            $('#can'+uid).css({'left':canvas.left});
+            ttip.children('canvas').css({'left':canvas.left});
             if(!option.multiple){
                 $('.tooltips-wrapper').fadeOut('fast');
             } else {
                 $('.tooltips-wrapper').css('z-index','998');
                 ttip.css('z-index','999');
             }
-            canvas.elem = document.getElementById('can'+uid);
+            canvas.elem = ttip.children('canvas')[0];
             drawTriangle(canvas);
             ttip.fadeIn('fast');
         }
@@ -89,37 +86,30 @@ function drawTriangle(canvas){
         return this.each(function(){
             if(options.multiple && options.activation == 'hover'){
                 options.multiple = false;
-                alert("Multiple tooltips isn't avaliable on hover activation. Multiple will be disabled")
+                console.log("Multiple tooltips isn't avaliable on hover activation. Multiple will be disabled");
             }
             if(options.height < 50) options.height = 50;
             if(options.width  < 50) options.width  = 50;
-
-            var tmp_id = Math.floor(Math.random()*10000);
-            while(in_array(tmp_id, setIDs)){
-                tmp_id = Math.floor(Math.random()*10000);
-            }
-            setIDs.push(tmp_id);
-
-            $(this).attr('uid',tmp_id);
             if(options.data == 'title') options.data = $(this).attr('title');
-            $('body').append('<div class="tooltips-wrapper"><div class="tooltips-body" id="tp_'+tmp_id+'">'+options.data+'</div></div>');
-            $('#tp_'+tmp_id+'').css({
+
+            var tooltip = $('<div class="tooltips-wrapper"><div class="tooltips-body">'+options.data+'</div></div>').appendTo('body');
+
+            tooltip.children('.tooltips-body').css({
                 'background-color':options.color,
                 'color' :options.textColor,
                 'min-height':options.height-22+'px',
                 'width' :options.width-12+'px'
             });
 
-            var tooltip = $('#tp_'+tmp_id+'').parent('.tooltips-wrapper')
             if(options.activation == 'hover'){
                 $(this).hover(function(){
-                    resetPosition($(this), options);
+                    resetPosition($(this), options,tooltip);
                 }, function(){ tooltip.hide(); });
                 tooltip.hover(function(){tooltip.show();}, function(){tooltip.hide();});
             } else {
                 $(this).bind('click',function(e){
                     if(tooltip.css('display') == 'none')
-                        resetPosition($(this), options);
+                        resetPosition($(this), options, tooltip);
                     else
                         tooltip.fadeOut('fast');
                     e.stopPropagation();
