@@ -4,36 +4,43 @@
  * See demo.html for examples
 */
 
-function drawTriangle(canvas){
-    if (canvas.elem.getContext){
-        var ctx = canvas.elem.getContext('2d');
-        ctx.beginPath();
-        if(canvas.pos == 'bottom'){
-            ctx.lineTo(30,0);
-            ctx.lineTo(15,10);
-            ctx.lineTo(0,0);
-        } else {
-            ctx.moveTo(0,12);
-            ctx.lineTo(30,12);
-            ctx.lineTo(15,2);
-            ctx.lineTo(0,12);
+function Triangle(){
+    this.pos;
+    this.left;
+    this.html;
+    this.color;
+    this.elem;
+
+    Triangle.prototype.drawMe = function() {
+        if (this.elem.getContext){
+            var ctx = this.elem.getContext('2d');
+            ctx.beginPath();
+            if(this.pos == 'bottom'){
+                ctx.lineTo(30,0);
+                ctx.lineTo(15,10);
+                ctx.lineTo(0,0);
+            } else {
+                ctx.moveTo(0,12);
+                ctx.lineTo(30,12);
+                ctx.lineTo(15,2);
+                ctx.lineTo(0,12);
+            }
+            ctx.lineWidth = "2";
+            ctx.strokeStyle = "rgba(0,0,0,0.5)";
+            ctx.stroke();
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.closePath();
         }
-        ctx.lineWidth = "2";
-        ctx.strokeStyle = "rgba(0,0,0,0.5)";
-        ctx.stroke();
-        ctx.fillStyle = canvas.color;
-        ctx.fill();
-        ctx.closePath();
-    }
+	}
 }
 
 (function($){
-    var setIDs = new Array();
     $.fn.tooltips = function(options){
         function resetPosition(elem, ttip){
 			var pos    = elem.offset();
 			var left   = pos.left-(options.width/2)+elem.width()/2;
-			var canvas = new Array();
+			var canvas = new Triangle();
 			var marge  = 10;
 
 			canvas.html = '<canvas width="30" height="12" class="tooltips-triangle"></canvas>';
@@ -41,36 +48,36 @@ function drawTriangle(canvas){
 			canvas.left = (options.width/2)-15;
 			canvas.color= options.color;
 			if(pos.left - $(document).scrollLeft() - marge < options.width/2){
-			    canvas.left -= options.width / 2 - elem.width() / 2 - (pos.left- $(document).scrollLeft()) / 2;
-			    left += options.width / 2 - elem.width() / 2 - (pos.left - $(document).scrollLeft()) / 2;
+                canvas.left -= options.width / 2 - elem.width() / 2 - (pos.left- $(document).scrollLeft()) / 2;
+                left += options.width / 2 - elem.width() / 2 - (pos.left - $(document).scrollLeft()) / 2;
 			}
 
 			ttip.css({
-			    'min-height':options.height,
-			    'left'  :left,
-			    'width' :options.width+'px'
+                'min-height':options.height,
+                'left'  :left,
+                'width' :options.width+'px'
 			});
 
 			ttip.find('canvas').remove();
 			ttip.children().append(canvas.html);
 
 			if(pos.top - $(document).scrollTop() - marge < ttip.height()){
-			    ttip.find('canvas').css({'bottom':'100%', 'top':''});
-			    ttip.css({'top':pos.top + elem.height()+marge+'px'});
+                ttip.find('canvas').css({'bottom':'100%', 'top':''});
+                ttip.css({'top':pos.top + elem.height()+marge+'px'});
 			} else {
-			    ttip.find('canvas').css({'bottom':'', 'top':'100%'});
-			    ttip.css({'top':pos.top - ttip.height()-marge+'px'});
+                ttip.find('canvas').css({'bottom':'', 'top':'100%'});
+                ttip.css({'top':pos.top - ttip.height()-marge+'px'});
 			}
 
 			ttip.find('canvas').css({'left':canvas.left});
 			if(!options.multiple){
-			    $('.tooltips-wrapper').fadeOut('fast');
+                $('.tooltips-wrapper').fadeOut('fast');
 			} else {
-			    $('.tooltips-wrapper').css('z-index','998');
-			    ttip.css('z-index','999');
+                $('.tooltips-wrapper').css('z-index','998');
+                ttip.css('z-index','999');
 			}
 			canvas.elem = ttip.find('canvas')[0];
-			drawTriangle(canvas);
+            canvas.drawMe();
 			ttip.fadeIn('fast');
 		}
 
@@ -83,7 +90,7 @@ function drawTriangle(canvas){
             textColor:'black',
             width:300
         };
-        var options = $.extend(defaults, options);
+        options = $.extend(defaults, options);
         return this.each(function(){
             if(options.multiple && options.activation == 'hover'){
                 options.multiple = false;
