@@ -96,11 +96,12 @@ function Triangle(html, pos, left, color){
                 options.multiple = false;
                 console.log("Multiple tooltips isn't avaliable on hover activation. Multiple will be disabled");
             }
+            var data = options.data;
             if(options.height < 50) options.height = 50;
             if(options.width  < 50) options.width  = 50;
-            if(options.data == 'title') options.data = $(this).attr('title');
+            if(options.data.indexOf('attr') === 0) data = $(this).attr(options.data.substr(5));
 
-            var tooltip = $('<div class="tooltips-wrapper"><div class="tooltips-body">'+options.data+'</div></div>').appendTo('body');
+            var tooltip = $('<div class="tooltips-wrapper"><div class="tooltips-body">'+data+'</div></div>').appendTo('body');
 
             tooltip.children('.tooltips-body').css({
                 'background-color':options.color,
