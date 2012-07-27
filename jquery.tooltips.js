@@ -4,11 +4,11 @@
  * See demo.html for examples
 */
 
-function Triangle(){
-    this.pos;
-    this.left;
-    this.html;
-    this.color;
+function Triangle(html, pos, left, color){
+    this.pos = pos;
+    this.left = left;
+    this.html = html;
+    this.color = color;
     this.elem;
 
     Triangle.prototype.drawMe = function() {
@@ -40,13 +40,13 @@ function Triangle(){
         function resetPosition(elem, ttip){
 			var pos    = elem.offset();
 			var left   = pos.left-(options.width/2)+elem.width()/2;
-			var canvas = new Triangle();
 			var marge  = 10;
+            var canvas = new Triangle(
+                                    '<canvas width="30" height="12" class="tooltips-triangle"></canvas>',
+                                    pos.top - $(document).scrollTop() - 10 < ttip.height() ? 'top' : 'bottom',
+                                    (options.width/2)-15,
+                                    options.color);
 
-			canvas.html = '<canvas width="30" height="12" class="tooltips-triangle"></canvas>';
-			canvas.pos  = pos.top - $(document).scrollTop() - 10 < ttip.height() ? 'top' : 'bottom';
-			canvas.left = (options.width/2)-15;
-			canvas.color= options.color;
 			if(pos.left - $(document).scrollLeft() - marge < options.width/2){
                 canvas.left -= options.width / 2 - elem.width() / 2 - (pos.left- $(document).scrollLeft()) / 2;
                 left += options.width / 2 - elem.width() / 2 - (pos.left - $(document).scrollLeft()) / 2;
