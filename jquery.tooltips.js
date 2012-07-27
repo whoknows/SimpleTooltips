@@ -57,8 +57,9 @@ function Triangle(html, pos, left, color){
                                     options.color);
 
 			if(pos.left - $(document).scrollLeft() - marge < options.width/2){
-                canvas.left -= options.width / 2 - elem.width() / 2 - (pos.left- $(document).scrollLeft()) / 2;
-                left += options.width / 2 - elem.width() / 2 - (pos.left - $(document).scrollLeft()) / 2;
+                var ecart = (options.width - elem.width() - pos.left - $(document).scrollLeft()) / 2;
+                canvas.left -= ecart;
+                left += ecart;
 			}
 
 			ttip.find('canvas').remove();
