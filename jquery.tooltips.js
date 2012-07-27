@@ -1,6 +1,6 @@
 /*
- * Simple ToolTips v1.3
- * By Guillaume Coste, guillaume.coste@gmail.com
+ * Simple ToolTips v1.4
+ * By Guillaume Coste, guillaume.coste (at) gmail.com
  * See demo.html for examples
 */
 
