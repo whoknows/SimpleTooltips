@@ -104,13 +104,13 @@ function drawTriangle(canvas){
 
             if(options.activation == 'hover'){
                 $(this).hover(function(){
-                    resetPosition($(this), options,tooltip);
+                    resetPosition($(this), tooltip);
                 }, function(){ tooltip.hide(); });
                 tooltip.hover(function(){tooltip.show();}, function(){tooltip.hide();});
             } else {
                 $(this).bind('click',function(e){
                     if(tooltip.css('display') == 'none')
-                        resetPosition($(this), options, tooltip);
+                        resetPosition($(this), tooltip);
                     else
                         tooltip.fadeOut('fast');
                     e.stopPropagation();
