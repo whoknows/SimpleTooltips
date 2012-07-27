@@ -40,7 +40,6 @@ function Triangle(html, pos, left, color){
         function resetPosition(elem, ttip){
 			if(!options.multiple){
                 $('.tooltips-wrapper').fadeOut('fast');
-                return true;
             } else {
                 $('.tooltips-wrapper').css('z-index','998');
                 ttip.css('z-index','999');
