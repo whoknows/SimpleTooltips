@@ -14,7 +14,7 @@
 			'activation':'click',           //'click' or 'hover'
 			'color':'#A0D650',              //any css color
 			'data':'Test !<br /\>Multiligne',//whatever you want (to use data stored in an attribute use "attr:your_attr")
-			'multiple':true,				//Allows to have multiple tooltips opened at the same time
+			'multiple':true,		//Allows to have multiple tooltips opened at the same time
 			'height':'50',                  //min 50px
 			'textColor':'white',            //any css color
 			'width':'100'                   //min 50px
@@ -23,8 +23,8 @@
 		$('.hoverme').tooltips({
 			'activation':'hover',           //'click' or 'hover'
 			'color':'DodgerBlue',           //any css color
-			'data':'C\'est joli !<br /\>Trop bien :D Plein de texte<br /\> Yay !',//whatever you want  (to use data stored in an attribute use "attr:your_attr")
-			'multiple':false,				//Allows to have multiple tooltips opened at the same time (doesnt work with hover mode)
+			'data':'attr:data',		//whatever you want  (to use data stored in an attribute use "attr:your_attr")
+			'multiple':false,		//Allows to have multiple tooltips opened at the same time (doesnt work with hover mode)
 			'height':'80',                  //min 50px
 			'textColor':'white',            //any css color
 			'width':'150'                   //min 50px
@@ -37,7 +37,7 @@
 	<p>
 		Texte de test, <span class="clickme"><b>ce mot</b></span> est cliquable<br /><br /><br /><br /><br />
 		<span class="clickme"><b>Ce mot</b></span>, aussi il faut juste cliquer dessus !
-		Ou encore en mode "survol" il y a : <span class="hoverme"><b>ce mot</b></span>
+		Ou encore en mode "survol" il y a : <span class="hoverme" data="C'est joli !<br /\>Trop bien :D Plein de texte<br /\> Yay !"><b>ce mot</b></span>
 	</p>
 </body>
 </html>
