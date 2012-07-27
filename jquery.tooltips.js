@@ -30,48 +30,49 @@ function drawTriangle(canvas){
 (function($){
     var setIDs = new Array();
     $.fn.tooltips = function(options){
-        function resetPosition(elem, option, ttip){
-            var pos  = $.extend({}, elem.offset(),{width:elem.offsetWidth,height:elem.offsetHeight});
-            var uid  = elem.attr('uid');
-            var left = pos.left-(options.width/2)+elem.width()/2;
+        function resetPosition(elem, ttip){
+			var pos    = elem.offset();
+			var left   = pos.left-(options.width/2)+elem.width()/2;
+			var canvas = new Array();
+			var marge  = 10;
 
-            canvas = new Array();
-            canvas.html = '<canvas width="30" height="12" class="tooltips-triangle"></canvas>';
-            canvas.pos  = pos.top < ttip.height() ? 'top' : 'bottom';
-            canvas.left = (option.width/2)-15;
-            canvas.color= option.color;
-            if(pos.left < options.width/2){
-                canvas.left -= (option.width/2) - (elem.width()/2) - pos.left/2;
-                left += (options.width/2)-elem.width()/2-pos.left/2;
-            }
+			canvas.html = '<canvas width="30" height="12" class="tooltips-triangle"></canvas>';
+			canvas.pos  = pos.top - $(document).scrollTop() - 10 < ttip.height() ? 'top' : 'bottom';
+			canvas.left = (options.width/2)-15;
+			canvas.color= options.color;
+			if(pos.left - $(document).scrollLeft() - marge < options.width/2){
+			    canvas.left -= options.width / 2 - elem.width() / 2 - (pos.left- $(document).scrollLeft()) / 2;
+			    left += options.width / 2 - elem.width() / 2 - (pos.left - $(document).scrollLeft()) / 2;
+			}
 
-            ttip.css({
-                'left'  :left,
-                'width' :options.width+'px'
-            });
+			ttip.css({
+			    'min-height':options.height,
+			    'left'  :left,
+			    'width' :options.width+'px'
+			});
 
-            ttip.children('canvas').remove();
-            ttip.append(canvas.html);
+			ttip.find('canvas').remove();
+			ttip.children().append(canvas.html);
 
-            if(pos.top < ttip.height()){
-                ttip.children('canvas').css({'bottom':'99%', 'top':''});
-                ttip.css({'top':pos.top + elem.height()+10+'px'});
-            } else {
-                ttip.children('canvas').css({'bottom':'', 'top':'99%'});
-                ttip.css({'top':pos.top - ttip.height()-10+'px'});
-            }
+			if(pos.top - $(document).scrollTop() - marge < ttip.height()){
+			    ttip.find('canvas').css({'bottom':'100%', 'top':''});
+			    ttip.css({'top':pos.top + elem.height()+marge+'px'});
+			} else {
+			    ttip.find('canvas').css({'bottom':'', 'top':'100%'});
+			    ttip.css({'top':pos.top - ttip.height()-marge+'px'});
+			}
 
-            ttip.children('canvas').css({'left':canvas.left});
-            if(!option.multiple){
-                $('.tooltips-wrapper').fadeOut('fast');
-            } else {
-                $('.tooltips-wrapper').css('z-index','998');
-                ttip.css('z-index','999');
-            }
-            canvas.elem = ttip.children('canvas')[0];
-            drawTriangle(canvas);
-            ttip.fadeIn('fast');
-        }
+			ttip.find('canvas').css({'left':canvas.left});
+			if(!options.multiple){
+			    $('.tooltips-wrapper').fadeOut('fast');
+			} else {
+			    $('.tooltips-wrapper').css('z-index','998');
+			    ttip.css('z-index','999');
+			}
+			canvas.elem = ttip.find('canvas')[0];
+			drawTriangle(canvas);
+			ttip.fadeIn('fast');
+		}
 
         var defaults = {
             activation:'click',
