@@ -48,8 +48,8 @@ function Triangle(html, pos, left, color){
             
             var pos    = elem.offset();
 			var left   = pos.left-(options.width/2)+elem.width()/2;
-			var marge  = 10;
-            var isTop  = pos.top - $(document).scrollTop() - 10 < ttip.height();
+			var isTop  = pos.top - $(document).scrollTop() - 10 < ttip.height();
+            var marge  = isTop ? -10 : 10;
             var sign   = isTop ? 1 : -1;
             var canvas = new Triangle(
                                     '<canvas width="30" height="12" class="tooltips-triangle"></canvas>',
@@ -69,10 +69,10 @@ function Triangle(html, pos, left, color){
                 'min-height':options.height,
                 'left'      :left,
                 'width'     :options.width+'px',
-                'top':pos.top + (ttip.height()*sign) + (marge*sign) + 'px'
+                'top':pos.top + (ttip.height() + marge)*sign + 'px'
             }).find('canvas').css({
-                'left'  :canvas.left, 
-                'bottom':isTop ? '' : '100%', 
+                'left'  : canvas.left, 
+                'bottom': isTop ? '' : '100%', 
                 'top'   : isTop ? '100%' : ''
             });
 
