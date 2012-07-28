@@ -32,7 +32,7 @@ function Triangle(html, pos, left, color){
             ctx.fill();
             ctx.closePath();
         }
-	}
+    }
 }
 
 (function($){
@@ -62,9 +62,7 @@ function Triangle(html, pos, left, color){
                 left += ecart;
 			}
 
-			ttip.find('canvas').remove();
-			ttip.children().append(canvas.html);
-
+			ttip.find('canvas').length===0&&ttip.children().append(canvas.html);
             ttip.css({
                 'min-height':options.height,
                 'left'      :left,
@@ -72,8 +70,8 @@ function Triangle(html, pos, left, color){
                 'top':pos.top + (ttip.height() + marge)*sign + 'px'
             }).find('canvas').css({
                 'left'  : canvas.left, 
-                'bottom': isTop ? '' : '100%', 
-                'top'   : isTop ? '100%' : ''
+                'bottom': isTop ? '100%' : '', 
+                'top'   : isTop ? '' : '100%'
             });
 
 			canvas.elem = ttip.find('canvas')[0];
