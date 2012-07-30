@@ -57,7 +57,7 @@ function Triangle(html, pos, left, color){
                                     options.color);
 
 			if(pos.left - $(document).scrollLeft() - marge < options.width/2){
-                var ecart = (options.width - elem.width() - pos.left - $(document).scrollLeft()) / 2;
+                var ecart = (options.width - elem.width() - pos.left + $(document).scrollLeft()) / 2;
                 canvas.left -= ecart;
                 left += ecart;
 			}
