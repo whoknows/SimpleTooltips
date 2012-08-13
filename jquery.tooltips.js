@@ -44,12 +44,12 @@ function Triangle(html, pos, left, color){
                 $('.tooltips-wrapper').css('z-index','998');
                 ttip.css('z-index','999');
 			}
-            
+
             var pos    = elem.offset();
 			var left   = pos.left-(options.width/2)+elem.width()/2;
 			var isTop  = pos.top - $(document).scrollTop() - 10 < ttip.height();
-            var marge  = isTop ? -10 : 10;
-            var sign   = isTop ? 1 : -1;
+            var marge  = 10;
+			var sign   = isTop ? 1 : -1;
             var canvas = new Triangle(
                                     '<canvas width="30" height="12" class="tooltips-triangle"></canvas>',
                                     isTop ? 'top' : 'bottom',
@@ -67,10 +67,10 @@ function Triangle(html, pos, left, color){
                 'min-height':options.height,
                 'left'      :left,
                 'width'     :options.width+'px',
-                'top':pos.top + (ttip.height() + marge)*sign + 'px'
+                'top'       :pos.top+((isTop?elem.height():ttip.height())+ marge) * sign + 'px'
             }).find('canvas').css({
-                'left'  : canvas.left, 
-                'bottom': isTop ? '100%' : '', 
+                'left'  : canvas.left,
+                'bottom': isTop ? '100%' : '',
                 'top'   : isTop ? '' : '100%'
             });
 
@@ -122,7 +122,7 @@ function Triangle(html, pos, left, color){
                     e.stopPropagation();
                 });
                 tooltip.click(function(e){e.stopPropagation();});
-                $(document).click(function(e){tooltip.hide();});
+                $(document).click(function(){tooltip.hide();});
                 if(options.multiple){
                     $('.tooltips-wrapper').click(function(){
                         $('.tooltips-wrapper').css('z-index','998');
